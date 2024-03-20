@@ -1,16 +1,19 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsString, IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
 
 export class CreateUserDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @IsEnum(['INTERN', 'ENGINEER', 'ADMIN'], {

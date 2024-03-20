@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { Callback, Context, Handler } from 'aws-lambda';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 let server: Handler;
 
@@ -14,13 +15,13 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe());
-  // const config = new DocumentBuilder()
-  //   .setTitle('Nest Prisma')
-  //   .setVersion('1.0')
-  //   .build();
-  // const document = SwaggerModule.createDocument(app, config);
-  // SwaggerModule.setup('api', app, document);
+  const config = new DocumentBuilder()
+    .setTitle('Nest Prisma')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
   // await app.listen(3000);
+  SwaggerModule.setup('api-docs', app, document);
   await app.init();
 
   const expressApp = app.getHttpAdapter().getInstance();
